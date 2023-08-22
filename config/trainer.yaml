@@ -7,7 +7,7 @@ defaults:
   - datasets: default
 
 wandb:
-  mode: online
+  mode: disabled
   project: iris
   entity: null
   name: null
@@ -80,7 +80,7 @@ training:
     entropy_weight: 0.001
 
 evaluation:
-  should: True
+  should: False
   every: 5
   tokenizer:
     batch_num_samples: ${training.tokenizer.batch_num_samples}

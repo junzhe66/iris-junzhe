@@ -62,18 +62,20 @@ class Trainer:
         episode_manager_test = EpisodeDirManager(self.episode_dir / 'test', max_num_episodes=cfg.collection.test.num_episodes_to_save)
         self.episode_manager_imagination = EpisodeDirManager(self.episode_dir / 'imagination', max_num_episodes=cfg.evaluation.actor_critic.num_episodes_to_save)
 
-        def create_env(cfg_env, num_envs):
-            env_fn = partial(instantiate, config=cfg_env)
-            return MultiProcessEnv(env_fn, num_envs, should_wait_num_envs_ratio=1.0) if num_envs > 1 else SingleProcessEnv(env_fn)
+
+        # def create_env(cfg_env, num_envs):
+        #     env_fn = partial(instantiate, config=cfg_env)
+        #     return MultiProcessEnv(env_fn, num_envs, should_wait_num_envs_ratio=1.0) if num_envs > 1 else SingleProcessEnv(env_fn)
 
         if self.cfg.training.should:
-            train_env = create_env(cfg.env.train, cfg.collection.train.num_envs)
-            self.train_dataset = instantiate(cfg.datasets.train)
-            self.train_collector = Collector(train_env, self.train_dataset, episode_manager_train)
+            #train_env = create_env(cfg.env.train, cfg.collection.train.num_envs)
+            #self.train_dataset = instantiate(cfg.datasets.train)
+            #self.train_collector = Collector(train_env, self.train_dataset, episode_manager_train)
+            self.train_collector = Collector()
 
         if self.cfg.evaluation.should:
-            test_env = create_env(cfg.env.test, cfg.collection.test.num_envs)
-            self.test_dataset = instantiate(cfg.datasets.test)
+            #test_env = create_env(cfg.env.test, cfg.collection.test.num_envs)
+            #self.test_dataset = instantiate(cfg.datasets.test)
             self.test_collector = Collector(test_env, self.test_dataset, episode_manager_test)
 
         assert self.cfg.training.should or self.cfg.evaluation.should
